@@ -1,0 +1,22 @@
+version: 3
+
+services:
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - ':8086'
+    volumes:
+      - C:/Users/alexandre.ledru/.influxdb/data:/var/lib/influxdb
+    environment:
+        INFLUXDB_DB: influx_metrics
+        INFLUXDB_ADMIN_USER: user
+        INFLUXDB_ADMIN_PASSWORD: userpass
+
+  ping:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - influxdb
+    volumes:
+      - .:/app

@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  # Real-time metrics retrieving database
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - 8086:8086
+    volumes:
+      - C:/Users/alexandre.ledru/.influxdb/data:/var/lib/influxdb
+    environment:
+      INFLUXDB_DB: metrics_collect
+      INFLUXDB_ADMIN_USER: user
+      INFLUXDB_ADMIN_PASSWORD: userpass
+    restart: always
+
+  # Ping Micro service
+  ping:
+    image: ping4.0:latest
+    build: ./ping
+    ports:
+      - 5002:5000
+    links:
+      - influxdb
+    volumes:
+      - ./ping:/app
