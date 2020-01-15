@@ -39,9 +39,3 @@ class Tutorial(models.Model):
 
     def __str__(self):
         return self.tutorial_title
-
-class Ping(models.Model):
-    ip_target = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.ip_target
